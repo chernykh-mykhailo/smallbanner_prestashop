@@ -1,0 +1,50 @@
+/**
+ * Small Banner CSS
+ */
+
+/* Position top-right for displayTop hook */
+#smallbanner-displaytop {
+    position: absolute;
+    /* top and right are set via inline styles from module configuration */
+    z-index: 999;
+}
+
+#smallbanner-displaytop img {
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+    #smallbanner-displaytop {
+        right: 15px;
+        top: 2px;
+    }
+
+    #smallbanner-displaytop img {
+        max-width: 80px;
+        /* Smaller on mobile to avoid overlap */
+    }
+}
+
+#smallbanner-displaytop img:hover {
+    transform: scale(1.05);
+}
+
+/* Generic styles for other hooks */
+.smallbanner {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.smallbanner img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Add specialized positioning if needed for other hooks */
+#smallbanner-footer {
+    padding: 20px 0;
+}

@@ -62,6 +62,7 @@ class SmallBanner extends Module
             Configuration::updateValue('SMALLBANNER_WIDTH', (int)Tools::getValue('SMALLBANNER_WIDTH'));
             Configuration::updateValue('SMALLBANNER_TOP', (int)Tools::getValue('SMALLBANNER_TOP'));
             Configuration::updateValue('SMALLBANNER_RIGHT', (int)Tools::getValue('SMALLBANNER_RIGHT'));
+            Configuration::updateValue('SMALLBANNER_LINK', Tools::getValue('SMALLBANNER_LINK'));
 
             if (isset($_FILES['SMALLBANNER_IMAGE']) && !empty($_FILES['SMALLBANNER_IMAGE']['tmp_name'])) {
                 if ($error = ImageManager::validateUpload($_FILES['SMALLBANNER_IMAGE'])) {
@@ -135,6 +136,12 @@ class SmallBanner extends Module
                         'desc' => $this->l('Horizontal offset from right. Default is 70.'),
                     ),
                     array(
+                        'type' => 'text',
+                        'label' => $this->l('Banner link'),
+                        'name' => 'SMALLBANNER_LINK',
+                        'desc' => $this->l('URL where the user is redirected when clicking the banner (optional).'),
+                    ),
+                    array(
                         'type' => 'checkbox',
                         'label' => $this->l('Display in hooks'),
                         'name' => 'SMALLBANNER_HOOKS',
@@ -192,6 +199,7 @@ class SmallBanner extends Module
             'SMALLBANNER_WIDTH' => Configuration::get('SMALLBANNER_WIDTH') ?: 120,
             'SMALLBANNER_TOP' => Configuration::get('SMALLBANNER_TOP') !== false ? Configuration::get('SMALLBANNER_TOP') : 5,
             'SMALLBANNER_RIGHT' => Configuration::get('SMALLBANNER_RIGHT') !== false ? Configuration::get('SMALLBANNER_RIGHT') : 70,
+            'SMALLBANNER_LINK' => Configuration::get('SMALLBANNER_LINK'),
         );
 
         // Pre-fill file field with image thumbnail if it exists
@@ -230,12 +238,14 @@ class SmallBanner extends Module
         $width = (int)Configuration::get('SMALLBANNER_WIDTH') ?: 120;
         $top = Configuration::get('SMALLBANNER_TOP') !== false ? Configuration::get('SMALLBANNER_TOP') : 5;
         $right = Configuration::get('SMALLBANNER_RIGHT') !== false ? Configuration::get('SMALLBANNER_RIGHT') : 70;
+        $link = Configuration::get('SMALLBANNER_LINK');
 
         $this->context->smarty->assign(array(
             'smallbanner_img' => $this->context->link->getMediaLink(_MODULE_DIR_ . $this->name . '/views/img/' . $image),
             'smallbanner_width' => $width,
             'smallbanner_top' => $top,
             'smallbanner_right' => $right,
+            'smallbanner_link' => $link,
             'hook_name' => strtolower($hookName)
         ));
 

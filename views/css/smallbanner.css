@@ -16,18 +16,7 @@
     transition: transform 0.3s ease;
 }
 
-/* Mobile adjustments */
-@media (max-width: 767px) {
-    #smallbanner-displaytop {
-        right: 15px;
-        top: 2px;
-    }
-
-    #smallbanner-displaytop img {
-        max-width: 80px;
-        /* Smaller on mobile to avoid overlap */
-    }
-}
+/* Mobile adjustments are now handled dynamically via module configuration */
 
 #smallbanner-displaytop img:hover {
     transform: scale(1.05);

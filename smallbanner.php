@@ -62,6 +62,9 @@ class SmallBanner extends Module
             Configuration::updateValue('SMALLBANNER_WIDTH', (int)Tools::getValue('SMALLBANNER_WIDTH'));
             Configuration::updateValue('SMALLBANNER_TOP', (int)Tools::getValue('SMALLBANNER_TOP'));
             Configuration::updateValue('SMALLBANNER_RIGHT', (int)Tools::getValue('SMALLBANNER_RIGHT'));
+            Configuration::updateValue('SMALLBANNER_MOBILE_WIDTH', (int)Tools::getValue('SMALLBANNER_MOBILE_WIDTH'));
+            Configuration::updateValue('SMALLBANNER_MOBILE_TOP', (int)Tools::getValue('SMALLBANNER_MOBILE_TOP'));
+            Configuration::updateValue('SMALLBANNER_MOBILE_RIGHT', (int)Tools::getValue('SMALLBANNER_MOBILE_RIGHT'));
             Configuration::updateValue('SMALLBANNER_LINK', Tools::getValue('SMALLBANNER_LINK'));
 
             if (isset($_FILES['SMALLBANNER_IMAGE']) && !empty($_FILES['SMALLBANNER_IMAGE']['tmp_name'])) {
@@ -142,6 +145,32 @@ class SmallBanner extends Module
                         'desc' => $this->l('URL where the user is redirected when clicking the banner (optional).'),
                     ),
                     array(
+                        'type' => 'html',
+                        'name' => 'SMALLBANNER_MOBILE_DIVIDER',
+                        'html_content' => '<hr><div class="alert alert-info"><b>' . $this->l('Mobile Settings (Screen < 768px)') . '</b></div>',
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Mobile Max-width (px)'),
+                        'name' => 'SMALLBANNER_MOBILE_WIDTH',
+                        'class' => 'fixed-width-lg',
+                        'desc' => $this->l('Default is 60.'),
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Mobile Top Offset (px)'),
+                        'name' => 'SMALLBANNER_MOBILE_TOP',
+                        'class' => 'fixed-width-lg',
+                        'desc' => $this->l('Vertical offset on mobile. Default is 60.'),
+                    ),
+                    array(
+                        'type' => 'text',
+                        'label' => $this->l('Mobile Right Offset (px)'),
+                        'name' => 'SMALLBANNER_MOBILE_RIGHT',
+                        'class' => 'fixed-width-lg',
+                        'desc' => $this->l('Horizontal offset on mobile. Default is 10.'),
+                    ),
+                    array(
                         'type' => 'checkbox',
                         'label' => $this->l('Display in hooks'),
                         'name' => 'SMALLBANNER_HOOKS',
@@ -199,6 +228,9 @@ class SmallBanner extends Module
             'SMALLBANNER_WIDTH' => Configuration::get('SMALLBANNER_WIDTH') ?: 120,
             'SMALLBANNER_TOP' => Configuration::get('SMALLBANNER_TOP') !== false ? Configuration::get('SMALLBANNER_TOP') : 5,
             'SMALLBANNER_RIGHT' => Configuration::get('SMALLBANNER_RIGHT') !== false ? Configuration::get('SMALLBANNER_RIGHT') : 70,
+            'SMALLBANNER_MOBILE_WIDTH' => Configuration::get('SMALLBANNER_MOBILE_WIDTH') ?: 60,
+            'SMALLBANNER_MOBILE_TOP' => Configuration::get('SMALLBANNER_MOBILE_TOP') !== false ? Configuration::get('SMALLBANNER_MOBILE_TOP') : 60,
+            'SMALLBANNER_MOBILE_RIGHT' => Configuration::get('SMALLBANNER_MOBILE_RIGHT') !== false ? Configuration::get('SMALLBANNER_MOBILE_RIGHT') : 10,
             'SMALLBANNER_LINK' => Configuration::get('SMALLBANNER_LINK'),
         );
 
@@ -238,6 +270,11 @@ class SmallBanner extends Module
         $width = (int)Configuration::get('SMALLBANNER_WIDTH') ?: 120;
         $top = Configuration::get('SMALLBANNER_TOP') !== false ? Configuration::get('SMALLBANNER_TOP') : 5;
         $right = Configuration::get('SMALLBANNER_RIGHT') !== false ? Configuration::get('SMALLBANNER_RIGHT') : 70;
+        
+        $m_width = (int)Configuration::get('SMALLBANNER_MOBILE_WIDTH') ?: 60;
+        $m_top = Configuration::get('SMALLBANNER_MOBILE_TOP') !== false ? Configuration::get('SMALLBANNER_MOBILE_TOP') : 60;
+        $m_right = Configuration::get('SMALLBANNER_MOBILE_RIGHT') !== false ? Configuration::get('SMALLBANNER_MOBILE_RIGHT') : 10;
+        
         $link = Configuration::get('SMALLBANNER_LINK');
 
         $this->context->smarty->assign(array(
@@ -245,6 +282,9 @@ class SmallBanner extends Module
             'smallbanner_width' => $width,
             'smallbanner_top' => $top,
             'smallbanner_right' => $right,
+            'smallbanner_m_width' => $m_width,
+            'smallbanner_m_top' => $m_top,
+            'smallbanner_m_right' => $m_right,
             'smallbanner_link' => $link,
             'hook_name' => strtolower($hookName)
         ));
